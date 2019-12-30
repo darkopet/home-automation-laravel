@@ -10,5 +10,10 @@
                 'device_type_id' => ['required', 'integer', 'exists:device_types,id'],
             ];
         }
+        public function deviceTypeCreateRule() {
+            return [
+                'name' => ['required', 'max:30', 'unique:device_types,name']
+            ];
+        }
     }
 ?>

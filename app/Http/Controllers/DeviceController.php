@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Device;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Libs\Rules;
 

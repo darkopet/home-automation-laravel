@@ -11,4 +11,8 @@ class Device extends Model
     protected $fillable = [
         'name', 'pin', 'status', 'device_type_id'
     ];
+
+    public function device_type() {
+        return $this->belongsTo('App\DeviceType');
+    }
 }
