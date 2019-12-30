@@ -64,6 +64,8 @@ class DeviceTypeController extends Controller
         $request->validate($this->rules->deviceTypeCreateRule());
 
         $deviceType->fill($request->all());
+        $deviceType->save();
+        
         return response()->json($deviceType);
     }
 
