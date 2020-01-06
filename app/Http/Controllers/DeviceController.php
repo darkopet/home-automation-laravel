@@ -12,6 +12,7 @@ class DeviceController extends Controller
     private $rules;
 
     function __construct() {
+        $this->middleware('isDeviceOwnerOrAdmin')->except('devices', 'store');
         $this->rules = new Rules();
     }
 

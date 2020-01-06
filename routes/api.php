@@ -27,17 +27,13 @@ Route::prefix('user')->group(function() {
     Route::post('register', 'AuthController@register');
 });
 
-Route::prefix('devices')->middleware(['auth:api', 'isDeviceOwnerOrAdmin'])->group(function() {
+Route::prefix('devices')->middleware('auth:api')->group(function() {
     Route::get('{device}', 'DeviceController@show');
     Route::put('{device}', 'DeviceController@update');
     Route::delete('{device}', 'DeviceController@destroy');
-});
-
-Route::prefix('devices')->middleware('auth:api')->group(function() {
     Route::get('', 'DeviceController@devices');
     Route::post('', 'DeviceController@store');
 });
-
 
 Route::prefix('device-type')->middleware('auth:api')->group(function() {
     Route::get('', 'DeviceTypeController@deviceTypes');
@@ -45,4 +41,8 @@ Route::prefix('device-type')->middleware('auth:api')->group(function() {
     Route::post('', 'DeviceTypeController@store');
     Route::put('{deviceType}', 'DeviceTypeController@update');
     Route::delete('{deviceType}', 'DeviceTypeController@destroy');
+});
+
+Route::fallback(function(){
+    return response()->json(['message' => 'Page Not Found.'], 404);
 });
