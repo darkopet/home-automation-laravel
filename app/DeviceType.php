@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeviceType extends Model
 {
-    protected $table = 'device_type';
+    protected $table = 'device_types';
+
+    protected $hidden = ['created_at', 'updated_at'];
 
     protected $fillable = [
         'name'

@@ -11,6 +11,7 @@ class DeviceTypeController extends Controller
     private $rules;
 
     function __construct() {
+        $this->middleware('isAdmin')->except('deviceTypes', 'show');
         $this->rules = new Rules();
     }
 
@@ -64,6 +65,8 @@ class DeviceTypeController extends Controller
         $request->validate($this->rules->deviceTypeCreateRule());
 
         $deviceType->fill($request->all());
+        $deviceType->save();
+        
         return response()->json($deviceType);
     }
 

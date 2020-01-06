@@ -1,5 +1,6 @@
 <?php
 
+use App\DeviceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,13 @@ Route::prefix('devices')->middleware(['auth:api', 'isDeviceOwnerOrAdmin'])->grou
 Route::prefix('devices')->middleware('auth:api')->group(function() {
     Route::get('', 'DeviceController@devices');
     Route::post('', 'DeviceController@store');
+});
+
+
+Route::prefix('device-type')->middleware('auth:api')->group(function() {
+    Route::get('', 'DeviceTypeController@deviceTypes');
+    Route::get('{deviceType}', 'DeviceTypeController@show');
+    Route::post('', 'DeviceTypeController@store');
+    Route::put('{deviceType}', 'DeviceTypeController@update');
+    Route::delete('{deviceType}', 'DeviceTypeController@destroy');
 });
