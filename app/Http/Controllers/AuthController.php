@@ -10,13 +10,12 @@ class AuthController extends Controller
 {
     private $rules;
 
-    function __construct()
-    {
-        $this->rules = new Rules();   
+    function __construct() {
+        $this->rules = new Rules();
     }
 
     public function register(Request $r) {
-        $r->validate($this->rules->userRegisterRule());
+        $r->validate($this->rules->userCredentialsRule());
 
         $user = User::create([
             'email' => $r->email,
@@ -28,6 +27,8 @@ class AuthController extends Controller
     }
 
     public function login(Request $r) {
+        $r->validate($this->rules->userCredentialsRule());
+        
         $credentials = $r->only(['email', 'password']);
 
         if( !$token = auth()->attempt($credentials)) {

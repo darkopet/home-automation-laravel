@@ -66,7 +66,7 @@ class DeviceController extends Controller
      */
     public function update(Request $request, Device $device)
     {
-        $request->validate($this->rules->deviceCreateRule());
+        $request->validate($this->rules->deviceUpdateRule());
 
         $device->fill($request->all());
         $device->save();

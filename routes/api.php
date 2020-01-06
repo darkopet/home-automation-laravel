@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 //Path with user prefix and middleware
 Route::prefix('user')->middleware('auth:api')->group(function() {
-    Route::get('/', 'AuthController@user');
-    Route::get('/logout', 'AuthController@logout');
+    Route::get('', 'AuthController@user');
+    Route::get('logout', 'AuthController@logout');
 });
 
 //Path with user prefix without middleware
 Route::prefix('user')->group(function() {
-    Route::post('/login', 'AuthController@login');
-    Route::post('/register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
 });
 
 Route::prefix('devices')->middleware(['auth:api', 'isDeviceOwnerOrAdmin'])->group(function() {
