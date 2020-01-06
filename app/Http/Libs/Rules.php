@@ -10,6 +10,12 @@
                 'password' => ['required', 'string', 'min:3']
             ];
         }
+        public function userCredentialsRule() {
+            return [
+                'email' => ['required', 'max:40', 'email'],
+                'password' => ['required', 'min:5']
+            ];
+        }
         public function deviceCreateRule() {
             return [
                 'name' => ['required', 'string', 'max:30'],
@@ -29,12 +35,6 @@
         public function deviceTypeCreateRule() {
             return [
                 'name' => ['required', 'max:30', 'unique:device_types,name']
-            ];
-        }
-        public function userCredentialsRule() {
-            return [
-                'email' => ['required', 'max:40', 'unique:users,email', 'email'],
-                'password' => ['required', 'min:5']
             ];
         }
     }
