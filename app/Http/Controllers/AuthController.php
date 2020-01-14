@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         $token = auth()->login($user);
-        return $this->respondWithToken($token);
+        return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
     }
 
     public function login(Request $r) {
@@ -35,16 +35,20 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized']);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
     }
 
     public function logout() {
         auth()->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['status' => 'success']);
     }
 
     public function user(Request $r) {
         return $r->user();
+    }
+
+    public function refreshToken() {
+        return False;
     }
 
     protected function respondWithToken($token) {
