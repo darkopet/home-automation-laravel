@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         $token = auth()->login($user);
-        return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+        $this->respondWithToken($token);
     }
 
     public function login(Request $r) {
@@ -35,16 +35,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized']);
         }
 
-        return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+        $this->respondWithToken($token);
     }
 
     public function logout() {
         auth()->logout();
-        return response()->json(['status' => 'success']);
+        return response()->json(['status' => 'success'], 200);
     }
 
     public function user(Request $r) {
-        return $r->user();
+        return response()->json(['status' => 'success', $r->user()], 200);
     }
 
     public function refreshToken() {
@@ -53,9 +53,10 @@ class AuthController extends Controller
 
     protected function respondWithToken($token) {
         return response()->json([
+            'status' => 'success',
             'access_token' => $token,
             'token_type' => 'bearer',
             'expiries_in' => auth()->factory()->getTTL() * 60
-        ]);
+        ], 200)->header('Authorization', $token);
     }
 }
