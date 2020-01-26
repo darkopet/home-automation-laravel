@@ -11,8 +11,8 @@ const config = {
   tokenStore: ['localStorage'],
   rolesVar: 'isAdmin',
   registerData: {url: 'user/register', method: 'POST', redirect: '/login'},
-  loginData: {url: 'user/login', method: 'POST', redirect: '', fetchUser: true},
-  logoutData: {url: 'user/logout', method: 'GET', redirect: '/', makeRequest: true},
+  loginData: {url: 'user/login', method: 'POST', redirect: '/home', fetchUser: true},
+  logoutData: {url: 'user/logout', method: 'GET', redirect: '/login', makeRequest: true},
   fetchData: {url: 'user', method: 'GET', enabled: true},
   refreshData: {url: 'user/refresh', method: 'GET', enabled: false, interval: 30}
 }

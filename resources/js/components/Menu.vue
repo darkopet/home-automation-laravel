@@ -1,29 +1,39 @@
 <template>
-    <nav id="nav">
-        <ul>
-            <!--UNLOGGED-->
-            <li v-if="!$auth.check()" v-for="(route, key) in routes.unlogged" v-bind:key="route.path">
-                <router-link  :to="{ name : route.path }" :key="key">
-                    {{route.name}}
-                </router-link>
-            </li>
-            <!--LOGGED USER-->
-            <li v-if="$auth.check(1)" v-for="(route, key) in routes.user" v-bind:key="route.path">
-                <router-link  :to="{ name : route.path }" :key="key">
-                    {{route.name}}
-                </router-link>
-            </li>
-            <!--LOGGED ADMIN-->
-            <li v-if="$auth.check(2)" v-for="(route, key) in routes.admin" v-bind:key="route.path">
-                <router-link  :to="{ name : route.path }" :key="key">
-                    {{route.name}}
-                </router-link>
-            </li>
-            <!--LOGOUT-->
-            <li v-if="$auth.check()">
-                <a href="#" @click.prevent="$auth.logout()">Logout</a>
-            </li>
-        </ul>
+    <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Home automation</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul v-if="!$auth.check()" class="navbar-nav">
+				<!--UNLOGGED-->
+				<li v-for="(route, key) in routes.unlogged" v-bind:key="route.path" class="nav-item">
+					<router-link  :to="{ name : route.path }" :key="key" class="nav-link">
+						{{route.name}}
+					</router-link>
+				</li>
+			</ul>
+			<ul v-if="$auth.check(0)" class="navbar-nav">
+				<li v-for="(route, key) in routes.user" v-bind:key="route.path" class="nav-item">
+					<router-link  :to="{ name : route.path }" :key="key" class="nav-link">
+						{{route.name}}
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<a href="#" @click.prevent="$auth.logout()" class="nav-link">Logout</a>
+				</li>
+			</ul>
+			<ul v-if="$auth.check(1)" class="navbar-nav">
+				<li v-for="(route, key) in routes.admin" v-bind:key="route.path" class="nav-item">
+					<router-link  :to="{ name : route.path }" :key="key" class="nav-link">
+						{{route.name}}
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<a href="#" @click.prevent="$auth.logout()" class="nav-link">Logout</a>
+				</li>
+			</ul>
+		</div>
     </nav>
 </template>
 <script>
@@ -34,11 +44,11 @@
           // UNLOGGED
           unlogged: [
             {
-              name: 'Inscription',
+              name: 'Rejestracja',
               path: 'register'
             },
             {
-              name: 'Connexion',
+              name: 'Login',
               path: 'login'
             }
           ],
@@ -46,7 +56,11 @@
           user: [
             {
               name: 'Dashboard',
-              path: 'dashboard'
+              path: 'home'
+            },
+            {
+              name: 'Dodaj urządzenie',
+              path: 'add-device'
             }
           ],
           // LOGGED ADMIN
@@ -54,6 +68,10 @@
             {
               name: 'Dashboard',
               path: 'admin.dashboard'
+            },
+            {
+              name: 'Dodaj urządzenie',
+              path: 'add-device'
             }
           ]
         }

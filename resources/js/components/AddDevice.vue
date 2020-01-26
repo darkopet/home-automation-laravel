@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <Menu />
-    <router-view></router-view>
-  </div>
+    <div class="container">
+      Add Device
+        
+    </div>
 </template>
 <script>
-  import Menu from './components/Menu'
 
   export default {
     data() {
@@ -14,7 +13,7 @@
       }
     },
     components: {
-      Menu,
+      
     }
   }
 </script>

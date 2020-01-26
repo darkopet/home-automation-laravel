@@ -23,19 +23,20 @@ class AuthController extends Controller
         ]);
 
         $token = auth()->login($user);
-        $this->respondWithToken($token);
+
+        return $this->respondWithToken($token);
     }
 
     public function login(Request $r) {
         $r->validate($this->rules->userCredentialsRule());
         
         $credentials = $r->only(['email', 'password']);
-
+        
         if( !$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized']);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $this->respondWithToken($token);
+        return $this->respondWithToken($token);
     }
 
     public function logout() {
@@ -44,7 +45,7 @@ class AuthController extends Controller
     }
 
     public function user(Request $r) {
-        return response()->json(['status' => 'success', $r->user()], 200);
+        return response()->json(['status' => 'success', 'user' => $r->user()], 200);
     }
 
     public function refreshToken() {
