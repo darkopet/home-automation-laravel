@@ -14,7 +14,7 @@ import router from './router'
 
 import Index from './Index'
 
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue, IconsPlugin)
 
 //Vue.http.options.root = 'http://127.0.0.1/api'
 
@@ -23,9 +23,11 @@ Vue.router = router
 
 Vue.use(VueRouter)
 
-axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`
-Vue.use(VueAxios, axios);
+axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api/`
+Vue.use(VueAxios, axios)
 Vue.use(VueAuth, auth)
+
+axios.defaults.headers.common['Accept'] = 'application/json'
 
 const app = new Vue({
   el: '#app',

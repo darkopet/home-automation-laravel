@@ -1,4 +1,5 @@
 <template>
+  <div class="parent-container">
     <div class="container">
         <form action="" @submit.prevent="register">
             <div class="form-group">
@@ -12,6 +13,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+  </div>
 </template>
 <script>
   export default {
@@ -23,7 +25,6 @@
       }
     },
     components: {
-        //
     },
     methods: {
       register() {
@@ -47,3 +48,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .parent-container {
+    margin-top: 15px;
+  }
+</style>

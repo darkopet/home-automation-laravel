@@ -1,17 +1,20 @@
 <template>
+  <div class="parent-container">
     <div class="container">
+        <div v-if="has_error" class="alert alert-danger">Wrong credentials</div>
         <form action="" @submit.prevent="login">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" class="form-control">
+                <input id="email" type="email" class="form-control" v-model="email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" type="password" class="form-control">
+                <input id="password" type="password" class="form-control" v-model="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </div>
+      </div>
+  </div>
 </template>
 <script>
   export default {
@@ -23,7 +26,6 @@
       }
     },
     components: {
-        //
     },
     methods: {
       login() {
@@ -34,16 +36,22 @@
             password: app.password
           },
           success: function() {
-            alert('Logged !')
+            //alert('Logged !')
           },
           error: function() {
-            alert('Error')
+            //alert('Error')
+            app.has_error = true
           }, 
           remember: false,
           fetchUser: true
         })
       }
-
     }
   }
 </script>
+
+<style scoped>
+  .parent-container {
+    margin-top: 15px;
+  }
+</style>

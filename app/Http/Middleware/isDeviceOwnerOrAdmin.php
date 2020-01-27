@@ -20,6 +20,6 @@ class isDeviceOwnerOrAdmin
         //$user_id = Device::findOrFail($request->route('id'))->user_id;
         if($request->user()->isAdmin || $request->user()->id === $request->route('device')->user_id) return $next($request);
 
-        return response()->json(['Error' => 'Unauthorized']);
+        return response()->json(['Error' => 'Unauthorized'], 401);
     }
 }

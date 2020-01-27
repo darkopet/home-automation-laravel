@@ -23,10 +23,8 @@ class DeviceController extends Controller
      */
     public function devices()
     {
-        if(Auth::check()) {
-            $devices = Device::where('user_id', Auth::user()->id)->get();
-            return response()->json($devices);
-        }
+        $devices = Device::where('user_id', Auth::user()->id)->get();
+        return response()->json(['status' => 'success', 'devices' => $devices], 200);
     }
 
     /**
@@ -44,7 +42,7 @@ class DeviceController extends Controller
         $device->user_id = Auth::user()->id;
         $device->save();
 
-        return response()->json($device);
+        return response()->json(['status' => 'success', 'device' => $device], 200);
     }
 
     /**
@@ -55,7 +53,7 @@ class DeviceController extends Controller
      */
     public function show(Device $device)
     {
-        return response()->json($device);
+        return response()->json(['status' => 'success', 'device' => $device], 200);
     }
 
     /**
@@ -72,7 +70,7 @@ class DeviceController extends Controller
         $device->fill($request->all());
         $device->save();
 
-        return response()->json($device);
+        return response()->json(['status' => 'success', 'device' => $device], 200);
     }
 
     /**
@@ -84,6 +82,6 @@ class DeviceController extends Controller
     public function destroy(Device $device)
     {
         $device->delete();
-        return response()->json($device);
+        return response()->json(['status' => 'success', 'device' => $device], 200);
     }
 }

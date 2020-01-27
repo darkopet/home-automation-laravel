@@ -1,7 +1,8 @@
 import VueRouter from 'vue-router';
-import Home from './components/Home'
-import Login from './components/Login'
-import Register from './components/Register'
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import AddDevice from './components/AddDevice';
 
 const router = new VueRouter({
 mode: 'history',
@@ -28,6 +29,14 @@ routes: [
             component: Register,
             meta: {
                 auth: false
+            }
+        },
+        {
+            path: '/add-device',
+            name: 'add-device',
+            component: AddDevice,
+            meta: {
+                auth: true
             }
         }
     ]

@@ -22,7 +22,7 @@ class DeviceTypeController extends Controller
      */
     public function deviceTypes()
     {
-        return response()->json(DeviceType::all());
+        return response()->json(['status' => 'success', 'deviceTypes' => DeviceType::all()], 200);
     }
 
     /**
@@ -39,7 +39,7 @@ class DeviceTypeController extends Controller
         $deviceType->fill($request->all());
         $deviceType->save();
 
-        return response()->json($deviceType);
+        return response()->json(['status' => 'success', 'deviceType' => $deviceType], 200);
     }
 
     /**
@@ -50,7 +50,7 @@ class DeviceTypeController extends Controller
      */
     public function show(DeviceType $deviceType)
     {
-        return response()->json($deviceType);
+        return response()->json(['status' => 'success', 'deviceType' => $deviceType], 200);
     }
 
     /**
@@ -67,7 +67,7 @@ class DeviceTypeController extends Controller
         $deviceType->fill($request->all());
         $deviceType->save();
         
-        return response()->json($deviceType);
+        return response()->json(['status' => 'success', 'deviceType' => $deviceType], 200);
     }
 
     /**
@@ -80,6 +80,6 @@ class DeviceTypeController extends Controller
     {
         $deviceType->delete();
 
-        return response()->json($deviceType);
+        return response()->json(['status' => 'success', 'deviceType' => $deviceType], 200);
     }
 }
