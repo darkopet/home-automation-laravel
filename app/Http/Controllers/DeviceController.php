@@ -84,4 +84,10 @@ class DeviceController extends Controller
         $device->delete();
         return response()->json(['status' => 'success', 'device' => $device], 200);
     }
+
+    public function changeStatus(Device $device, $status) {
+        $device->status = $status;
+        $device->save();
+        return response()->json(['status' => 'success', 'device' => $device], 200);
+    }
 }

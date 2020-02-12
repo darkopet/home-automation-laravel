@@ -33,9 +33,7 @@ Route::prefix('devices')->middleware('auth:api')->group(function() {
     Route::delete('{device}', 'DeviceController@destroy');
     Route::get('', 'DeviceController@devices');
     Route::post('', 'DeviceController@store');
-    Route::get('{device}/status/{status}', function($device, $status) {
-        return response()->json([$device,$status]);
-    });
+    Route::get('{device}/status/{status}', 'DeviceController@changeStatus');
 });
 
 Route::prefix('device-type')->middleware('auth:api')->group(function() {
