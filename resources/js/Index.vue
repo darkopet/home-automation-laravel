@@ -1,7 +1,10 @@
 <template>
   <div>
     <Menu />
-    <router-view></router-view>
+    
+    <div class="parent-container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
@@ -18,3 +21,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .parent-container {
+    margin-top: 15px;
+  }
+</style>

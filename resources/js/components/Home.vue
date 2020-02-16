@@ -5,6 +5,7 @@
           <th>Nazwa</th>
           <th>Pin</th>
           <th>Status</th>
+          <th>Akcja</th>
         </tr>
         <tr v-for="device in devices" :key="device.id">
           <td>{{device.name}}</td>
@@ -27,7 +28,10 @@
     methods: {
       fetchDevices() {
         axios.get('/devices').then(res => {
-          this.devices.push(res.data.devices[0])
+          res.data.devices.forEach(device => {
+            this.devices.push(device);
+          });
+
         }).catch(err => {
           console.log(err);
         });
