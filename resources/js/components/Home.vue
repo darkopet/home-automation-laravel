@@ -12,7 +12,10 @@
           <td>{{device.pin}}</td>
           <td v-if="device.status == 0">Wyłączony</td>
           <td v-if="device.status == 1">Włączony</td>
-          <td><button @click="changeStatus(device.id, !device.status)" class="btn btn-danger">Change Status</button></td>
+          <td>
+            <button @click="changeStatus(device.id, !device.status)" class="btn btn-warning">Change Status</button>
+            <button class="btn btn-danger">Delete</button>
+          </td>
         </tr>
       </table>
     </div>
@@ -40,7 +43,6 @@
         let stat = status ? 1 : 0;
         axios.get('/devices/'+id+'/status/'+stat).then(res => {
           this.devices.find(d => d.id == id).status = status;
-          console.log(res.data);
         }).catch(err => {
           console.log(err);
         });
