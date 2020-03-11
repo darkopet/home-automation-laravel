@@ -1,9 +1,10 @@
 <template>
     <div class="container">
-      <div class="alert alert-danger">
-        <ul>
-          
-        </ul>
+      <div v-if="has_success" class="alert alert-success">Device successfully added !</div>
+      <div v-if="has_error" class="alert alert-danger" style="padding-bottom: 0">
+      <ul>
+        <li v-for="(error, key) in errors" :key="key">{{ error[0] }}</li>
+      </ul>
       </div>
       <form action="" @submit.prevent="addDevice">
         <div class="form-group">
@@ -43,6 +44,7 @@
     data() {
       return {
         has_error: false,
+        has_success: false,
         errors: [],
         deviceTypes: [],
         device_name: '',
@@ -65,13 +67,14 @@
       addDevice: function() {
         axios.post('/devices', {'name': this.device_name, 'pin': this.device_pin, 'device_type_id': this.device_type, 'status': this.device_status})
             .then(res => {
-              console.log(res.data);
+              this.has_error = false;
+              this.has_success = true;
             }).catch(err => {
+              this.has_error = true;
+              this.has_success = false;
               if(err.response) {
-                console.log(err.response.data.errors);
-                this.errors.push(err.response.data.errors[0]);
+                this.errors = err.response.data.errors;
               }
-              console.log(err);
             })
       }
     },
@@ -80,3 +83,7 @@
     }
   }
 </script>
+
+<style scoped>
+
+</style>
