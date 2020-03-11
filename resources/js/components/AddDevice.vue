@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+      <div class="alert alert-danger">
+        <ul>
+          
+        </ul>
+      </div>
       <form action="" @submit.prevent="addDevice">
         <div class="form-group">
           <label for="device_name">Nazwa urządzenia</label>
@@ -37,6 +42,8 @@
   export default {
     data() {
       return {
+        has_error: false,
+        errors: [],
         deviceTypes: [],
         device_name: '',
         device_pin: '',
@@ -60,6 +67,10 @@
             .then(res => {
               console.log(res.data);
             }).catch(err => {
+              if(err.response) {
+                console.log(err.response.data.errors);
+                this.errors.push(err.response.data.errors[0]);
+              }
               console.log(err);
             })
       }
