@@ -15,7 +15,7 @@ class AuthController extends Controller
     }
 
     public function register(Request $r) {
-        $r->validate($this->rules->userCredentialsRule());
+        $r->validate($this->rules->userRegisterRule());
 
         $user = User::create([
             'email' => $r->email,

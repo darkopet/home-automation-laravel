@@ -8,6 +8,7 @@
           <th>Akcja</th>
         </tr>
         <tr v-for="device in devices" :key="device.id">
+          
           <td>{{device.name}}</td>
           <td>{{device.pin}}</td>
           <td v-if="device.status == 0">Wyłączony</td>
@@ -16,6 +17,7 @@
             <button @click="changeStatus(device.id, !device.status)" class="btn btn-warning">Change Status</button>
             <button class="btn btn-danger">Delete</button>
           </td>
+        
         </tr>
       </table>
     </div>
@@ -29,27 +31,22 @@
       }
     },
     methods: {
-      fetchDevices() {
-        axios.get('/devices').then(res => {
-          res.data.devices.forEach(device => {
-            this.devices.push(device);
-          });
-
-        }).catch(err => {
-          console.log(err);
-        });
-      },
       changeStatus(id, status) {
-        let stat = status ? 1 : 0;
-        axios.get('/devices/'+id+'/status/'+stat).then(res => {
-          this.devices.find(d => d.id == id).status = status;
-        }).catch(err => {
-          console.log(err);
-        });
+        status = status ? 1 : 0;
+        this.$store.dispatch('changeDeviceState', {id, status})
+        .then(response => {
+          this.devices.find(d => d.id === id).status = status
+        })
+        .catch(err => {
+          console.log('nie ok', err)
+        })
       }
     },
     created() {
-      this.fetchDevices();
+      this.$store.dispatch('retrieveDevices')
+      .then(response => {
+        this.devices = response.data.devices
+      })
     },
     components: {
       

@@ -1,17 +1,24 @@
 <template>
   <div class="parent-container">
     <div class="container">
-        <form action="" @submit.prevent="register">
+      <div class="card">
+        <div class="card-header">
+        Register
+        </div>
+        <div class="card-body">
+          <form action="" @submit.prevent="register">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="email" class="form-control" v-model="email">
+              <label for="email">Email</label>
+              <input id="email" type="email" class="form-control" v-model="email">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" class="form-control" v-model="password">
+              <label for="password">Password</label>
+              <input id="password" type="password" class="form-control" v-model="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,30 +28,21 @@
       return {
         email: '',
         password: '',
-        has_error: false
       }
-    },
-    components: {
     },
     methods: {
       register() {
-        var app = this
-        this.$auth.register({
-          data: {
-            email: app.email,
-            password: app.password
-          },
-          success: function() {
-            alert('Registered !')
-          },
-          error: function() {
-            alert('Error')
-          }, 
-          remember: false,
-          fetchUser: true
+        this.$store.dispatch('register', {
+          email: this.email,
+          password: this.password
+        })
+        .then(response => {
+          this.$router.push({ name: 'home' })
+        })
+        .catch(error => {
+          console.log(error)
         })
       }
-
     }
   }
 </script>

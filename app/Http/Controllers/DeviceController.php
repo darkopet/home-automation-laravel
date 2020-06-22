@@ -42,7 +42,7 @@ class DeviceController extends Controller
         $device->user_id = Auth::user()->id;
         $device->save();
 
-        return response()->json(['status' => 'success', 'device' => $device], 200);
+        return $this->device_res(200, $device);
     }
 
     /**
@@ -53,7 +53,7 @@ class DeviceController extends Controller
      */
     public function show(Device $device)
     {
-        return response()->json(['status' => 'success', 'device' => $device], 200);
+        return $this->device_res(200, $device);
     }
 
     /**
@@ -70,7 +70,7 @@ class DeviceController extends Controller
         $device->fill($request->all());
         $device->save();
 
-        return this->device_res(200, $device);
+        return $this->device_res(200, $device);
     }
 
     /**
@@ -82,17 +82,20 @@ class DeviceController extends Controller
     public function destroy(Device $device)
     {
         $device->delete();
-        return this->device_res(200, $device);
+        return $this->device_res(200, $device);
     }
 
-    public function changeStatus(Device $device, $status) {
+    public function changeStatus(Device $device, $status) 
+    {
+        if(!in_array($status, [0,1])) return $this->device_res(422);
+
         $device->status = $status;
         $device->save();
-        return this->device_res(200, $device);
+        return $this->device_res(200, $device);
     }
 
     private function device_res($status, $device = null) {
-        if($status == 200) $status_param = 'success'
+        if($status == 200) $status_param = 'success';
         else $status_param = 'error';
 
         return response()->json(['status' => $status_param, 'device' => $device], $status);
