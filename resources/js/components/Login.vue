@@ -39,6 +39,9 @@
         .then(response => {
           this.$router.push({ name: 'home' })
         })
+        .catch(error => {
+          this.has_error = true
+        })
       }
     }
   }

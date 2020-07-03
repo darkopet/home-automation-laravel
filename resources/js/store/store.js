@@ -40,19 +40,39 @@ export const store = new Vuex.Store({
         addDevice(state, device) {
             state.devices.push(device)
         },
-        changeDeviceState(state, id, status) {
-            state.devices.find(d => d.id == id).status = status
+        changeDeviceState(state, device) {
+            state.devices[state.devices.indexOf(device)].status = !device.status
+        },
+        deleteDevice(state, device) {
+            state.devices.splice(state.devices.indexOf(device), 1)
         }
     },
     actions: {
-        changeDeviceState(context, stat) {
+        deleteDevice(context, device) {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
+            if(context.getters.isLogged) {
+                return new Promise((resolve, reject) => {
+                    axios.delete(`/devices/${device.id}`)
+                    .then(response => {
+                        context.commit('deleteDevice', device)
+                        resolve(response)
+                    }).catch(error => {
+                        console.log(error);
+                        reject(error)
+                    })
+                })
+            }
+        },
+        changeDeviceState(context, device) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
             
             if(context.getters.isLogged) {
                 return new Promise((resolve, reject) => {
-                    axios.get(`/devices/${stat.id}/status/${stat.status}`)
+                    let status = !device.status ? 1 : 0;
+                    axios.get(`/devices/${device.id}/status/${status}`)
                     .then(response => {
-                        context.commit('changeDeviceState', stat.id, stat.status)
+                        context.commit('changeDeviceState', device)
                         resolve(response)
                     }).catch(error => {
                         console.log(error);
